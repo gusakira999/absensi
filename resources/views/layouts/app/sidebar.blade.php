@@ -15,9 +15,12 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+<<<<<<< HEAD
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('asu') }}
                     </flux:sidebar.item>
+=======
+>>>>>>> 67a71439af8aa1816d22c6ad3c801d3367f117bf
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 
