@@ -36,13 +36,13 @@
                 
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
                     @csrf
-                    <flux:menu.item 
-                        icon="arrow-right-start-on-rectangle"
+                    <button
                         type="submit"
-                        class="w-full"
+                        class="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm font-medium text-red-600 transition hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:hover:bg-red-950/40 dark:hover:text-red-300"
                     >
-                        Logout
-                    </flux:menu.item>
+                        <flux:icon.arrow-right-start-on-rectangle class="size-4" />
+                        <span>Logout</span>
+                    </button>
                 </form>
             </flux:menu>
         </flux:dropdown>
