@@ -2,16 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\DosenController;
 
-// Halaman utama - redirect ke login kalau belum login
+// Route home
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
     return redirect()->route('login');
-});
+})->name('home');
 
-// Dashboard umum (semua role bisa akses)
+// Dashboard umum
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -19,24 +21,23 @@ Route::get('/dashboard', function () {
 // ========================================
 // HALAMAN KHUSUS ADMIN
 // ========================================
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/', function () {
         return view('admin.dashboard');
-    })->name('admin.dashboard');
+    })->name('dashboard');
+
+    Route::resource('mahasiswa', MahasiswaController::class);
+    Route::resource('dosen', DosenController::class);
 });
 
-// ========================================
-// HALAMAN KHUSUS DOSEN
-// ========================================
+// Halaman khusus dosen
 Route::middleware(['auth', 'role:dosen'])->group(function () {
     Route::get('/dosen', function () {
         return view('dosen.dashboard');
     })->name('dosen.dashboard');
 });
 
-// ========================================
-// HALAMAN KHUSUS MAHASISWA
-// ========================================
+// Halaman khusus mahasiswa
 Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/mahasiswa', function () {
         return view('mahasiswa.dashboard');
