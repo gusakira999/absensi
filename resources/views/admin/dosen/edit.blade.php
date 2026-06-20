@@ -78,7 +78,7 @@
                        placeholder="Ulangi password baru">
             </div>
 
-            {{-- Program Studi --}}
+                       {{-- Program Studi --}}
             <div class="mb-6">
                 <label for="program_studi" class="block text-sm font-medium text-gray-700 mb-2">
                     Program Studi <span class="text-red-500">*</span>
@@ -91,16 +91,17 @@
                 @enderror
             </div>
 
-            {{-- Buttons --}}
-            <div class="flex gap-2">
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                    Update
-                </button>
-                <a href="{{ route('admin.dosen.index') }}" 
-                   class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
-                    Batal
-                </a>
+            {{-- TOMBOL SIMPAN DAN BATAL --}}
+            <div class="flex gap-3 pt-4 border-t border-gray-200 mt-6">
+                <flux:button type="submit" variant="primary">
+                     UPDATE DATA
+                </flux:button>
+    
+                 <flux:button href="{{ route('admin.dosen.index') }}" variant="outline">
+                     BATAL
+                </flux:button>
             </div>
+
         </form>
     </div>
 </div>

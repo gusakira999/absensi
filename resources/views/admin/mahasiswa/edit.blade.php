@@ -91,7 +91,7 @@
                 @enderror
             </div>
 
-            {{-- Jurusan --}}
+                        {{-- Jurusan --}}
             <div class="mb-6">
                 <label for="jurusan" class="block text-sm font-medium text-gray-700 mb-2">
                     Jurusan <span class="text-red-500">*</span>
@@ -104,18 +104,17 @@
                 @enderror
             </div>
 
-            {{-- Buttons --}}
-            <div class="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
-                <a href="{{ route('admin.mahasiswa.index') }}" 
-                   class="px-6 py-2.5 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition shadow-sm">
-                    Batal
-                </a>
-                
-                <button type="submit" 
-                        class="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-md">
-                    Update Data
-                </button>
+            {{-- TOMBOL SIMPAN DAN BATAL --}}
+            <div class="flex gap-3 pt-4 border-t border-gray-200 mt-6">
+                <flux:button type="submit" variant="primary">
+                     UPDATE DATA
+                </flux:button>
+    
+                <flux:button href="{{ route('admin.mahasiswa.index') }}" variant="outline">
+                    BATAL
+                </flux:button>
             </div>
+
         </form>
     </div>
 </div>
