@@ -105,14 +105,16 @@
             </div>
 
             {{-- Buttons --}}
-            <div class="flex gap-2">
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
-                    Update
-                </button>
+            <div class="flex items-center justify-end gap-4 mt-8 pt-6 border-t border-gray-200">
                 <a href="{{ route('admin.mahasiswa.index') }}" 
-                   class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-400 transition">
+                   class="px-6 py-2.5 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition shadow-sm">
                     Batal
                 </a>
+                
+                <button type="submit" 
+                        class="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-md">
+                    Update Data
+                </button>
             </div>
         </form>
     </div>
