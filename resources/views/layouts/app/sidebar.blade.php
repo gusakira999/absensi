@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item icon="home" :href="route('category.index')" :current="request()->routeIs('category.index')" wire:navigate>
-                        {{ __('Categories') }}
+                        {{ __('Absensi') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
