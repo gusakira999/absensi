@@ -15,15 +15,8 @@ new class extends Component
         return Category::latest()->paginate(10);
     }
 
-    public function edit(int $id): void
-    {
-        session()->flash('info', 'Edit for category '.$id.' is not implemented yet.');
-    }
-
-    public function delete(int $id): void
-    {
-        Category::findOrFail($id)->delete();
-        session()->flash('success', 'Category deleted successfully.');
+    public function edit($id){
+        $this->dispatch('edit-category', id: $id);
     }
 };
 ?>
@@ -38,6 +31,7 @@ new class extends Component
     </flux:modal.trigger>
 
     <livewire:category.create />
+    <livewire:category.edit />
     <x-flash-message />
 
     <div class="overflow-x-auto">
