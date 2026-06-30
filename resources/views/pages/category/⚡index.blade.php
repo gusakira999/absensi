@@ -14,60 +14,69 @@ new class extends Component
     {
         return Category::latest()->paginate(10);
     }
+
+    public function edit(int $id): void
+    {
+        session()->flash('info', 'Edit for category '.$id.' is not implemented yet.');
+    }
+
+    public function delete(int $id): void
+    {
+        Category::findOrFail($id)->delete();
+        session()->flash('success', 'Category deleted successfully.');
+    }
 };
 ?>
 
 <div class="max-w-7xl mx-auto space-y-4">
-    <flux:heading size="xl" class="text-zinc-800 dark:text-white">ABSENSI MAHASISWA</flux:heading>
-    <flux:subheading size="lg" class="text-zinc-600 dark:text-zinc-400">Manage your attendance</flux:subheading>
+    <flux:heading size="xl" class="text-zinc-800 dark:text-white">Category</flux:heading>
+    <flux:subheading size="lg" class="text-zinc-600 dark:text-zinc-400">Manage your categories</flux:subheading>
     <flux:separator variant="subtle" />
 
     <flux:modal.trigger name="create-category">
-        <flux:button variant="primary" icon="plus" color="primary">Add Student</flux:button>
+        <flux:button variant="primary" icon="plus" color="primary">Add Category</flux:button>
     </flux:modal.trigger>
 
-     {{-- table --}}
+    <livewire:category.create />
+    <x-flash-message />
+
     <div class="overflow-x-auto">
-       <flux:table :paginate="$this->categories">
+        <flux:table :paginate="$this->categories">
             <flux:table.columns>
                 <flux:table.column>No</flux:table.column>
                 <flux:table.column>Nama</flux:table.column>
-                <flux:table.column>NIM</flux:table.column>
-                <flux:table.column>Kelas</flux:table.column>
-                <flux:table.column>Status</flux:table.column>
+                <flux:table.column>Keterangan</flux:table.column>
+                <flux:table.column>Dibuat pada</flux:table.column>
+                <flux:table.column>Action</flux:table.column>
             </flux:table.columns>
 
             <flux:table.rows>
                 @foreach ($this->categories as $category)
                     <flux:table.row :key="$category->id">
-
                         <flux:table.cell>
                             {{ $loop->iteration + $this->categories->firstItem() - 1 }}
                         </flux:table.cell>
-                        
+
                         <flux:table.cell class="flex items-center gap-3">
                             {{ $category->name }}
                         </flux:table.cell>
 
                         <flux:table.cell class="text-zinc-500 dark:text-zinc-400">
-                            {{ $category->nim ?? '-' }}
+                            {{ $category->description ?? '-' }}
                         </flux:table.cell>
 
-                        <flux:table.cell class="whitespace-nowrap">{{ $category->kelas_at->diffForHumans() }}</flux:table.cell>
+                        <flux:table.cell class="whitespace-nowrap">
+                            {{ $category->created_at->diffForHumans() }}
+                        </flux:table.cell>
 
                         <flux:table.cell>
-
-
                             <flux:dropdown>
                                 <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" inset="top bottom"></flux:button>
 
                                 <flux:menu>
                                     <flux:menu.item icon="pencil" wire:click="edit({{ $category->id }})">Edit</flux:menu.item>
-
                                     <flux:menu.separator />
-
-                                    {{-- <flux:menu.item variant="danger" icon="trash" wire:click="$dispatch('confirm-delete', id: $category->id)">Delete</flux:menu.item> --}}
-                                    <flux:menu.item variant="danger" icon="trash" wire:click="$dispatch('confirm-delete', {id: {{ $category->id }}})">Delete</flux:menu.item>
+                                    <flux:menu.item variant="danger" icon="trash" wire:click="delete({{ $category->id }})">Delete</flux:menu.item>
                                 </flux:menu>
                             </flux:dropdown>
                         </flux:table.cell>
@@ -75,8 +84,5 @@ new class extends Component
                 @endforeach
             </flux:table.rows>
         </flux:table>
-
-
     </div>
-   
 </div>
