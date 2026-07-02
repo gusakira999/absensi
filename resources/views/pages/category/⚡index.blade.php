@@ -18,6 +18,11 @@ new class extends Component
     public function edit($id){
         $this->dispatch('edit-category', id: $id);
     }
+
+    public function confirmDelete($id)
+    {
+        $this->dispatch('confirm-delete', id: $id);
+    }
 };
 ?>
 
@@ -70,7 +75,7 @@ new class extends Component
                                 <flux:menu>
                                     <flux:menu.item icon="pencil" wire:click="edit({{ $category->id }})">Edit</flux:menu.item>
                                     <flux:menu.separator />
-                                    <flux:menu.item variant="danger" icon="trash" wire:click="delete({{ $category->id }})">Delete</flux:menu.item>
+                                    <flux:menu.item variant="danger" icon="trash" wire:click="confirmDelete({{ $category->id }})">Delete</flux:menu.item>
                                 </flux:menu>
                             </flux:dropdown>
                         </flux:table.cell>
