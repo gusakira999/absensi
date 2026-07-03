@@ -3,22 +3,81 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="min-h-screen bg-white dark:bg-zinc-800 flex">
+        <flux:sidebar sticky collapsible="mobile" class="h-screen min-h-screen border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.header>
                 <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </flux:sidebar.item>
-                    <flux:sidebar.item icon="home" :href="route('category.index')" :current="request()->routeIs('category.index')" wire:navigate>
-                        {{ __('Absensi') }}
-                    </flux:sidebar.item>
-                </flux:sidebar.group>
+                @if(auth()->user() && auth()->user()->role === 'admin')
+                    <flux:sidebar.group :heading="__('Admin')" class="grid">
+                        <flux:sidebar.item icon="home" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="folder-git-2" :href="route('admin.courses')" :current="request()->routeIs('admin.courses')" wire:navigate>
+                            {{ __('Manajemen Mata Kuliah') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="calendar" :href="route('admin.schedules')" :current="request()->routeIs('admin.schedules')" wire:navigate>
+                            {{ __('Kelola Jadwal') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="chart-line" :href="route('admin.reports')" :current="request()->routeIs('admin.reports')" wire:navigate>
+                            {{ __('Laporan & Monitoring') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @elseif(auth()->user() && auth()->user()->role === 'dosen')
+                    <flux:sidebar.group :heading="__('Dosen')" class="grid">
+                        <flux:sidebar.item icon="home" :href="route('dosen.dashboard')" :current="request()->routeIs('dosen.dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="book-open" :href="route('dosen.courses')" :current="request()->routeIs('dosen.courses')" wire:navigate>
+                            {{ __('Mata Kuliah') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="calendar" :href="route('dosen.schedules')" :current="request()->routeIs('dosen.schedules')" wire:navigate>
+                            {{ __('Kelola Jadwal') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="check" :href="route('dosen.recap')" :current="request()->routeIs('dosen.recap')" wire:navigate>
+                            {{ __('Rekap Absensi') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="chart-line" :href="route('dosen.reports')" :current="request()->routeIs('dosen.reports')" wire:navigate>
+                            {{ __('Laporan Kehadiran') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="cog" :href="route('profile.edit')" :current="request()->routeIs('profile.edit')" wire:navigate>
+                            {{ __('Settings') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @elseif(auth()->user() && auth()->user()->role === 'mahasiswa')
+                    <flux:sidebar.group :heading="__('Mahasiswa')" class="grid">
+                        <flux:sidebar.item icon="home" :href="route('mahasiswa.dashboard')" :current="request()->routeIs('mahasiswa.dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="calendar" :href="route('mahasiswa.jadwal')" :current="request()->routeIs('mahasiswa.jadwal')" wire:navigate>
+                            {{ __('Jadwal Kuliah') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="check" :href="route('mahasiswa.absensi')" :current="request()->routeIs('mahasiswa.absensi')" wire:navigate>
+                            {{ __('Absensi') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="clock" :href="route('mahasiswa.deadlines')" :current="request()->routeIs('mahasiswa.deadlines')" wire:navigate>
+                            {{ __('Deadline Tugas') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="chart-line" :href="route('mahasiswa.tracker')" :current="request()->routeIs('mahasiswa.tracker')" wire:navigate>
+                            {{ __('Tracker IPK') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="book-open" :href="route('mahasiswa.notes')" :current="request()->routeIs('mahasiswa.notes')" wire:navigate>
+                            {{ __('Catatan Materi') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @else
+                    <flux:sidebar.group :heading="__('Platform')" class="grid">
+                        <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="home" :href="route('category.index')" :current="request()->routeIs('category.index')" wire:navigate>
+                            {{ __('Absensi') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @endif
             </flux:sidebar.nav>
 
             <flux:spacer />
@@ -91,7 +150,9 @@
             </flux:dropdown>
         </flux:header>
 
-        {{ $slot }}
+        <div class="flex-1 w-full">
+            {{ $slot }}
+        </div>
 
         @persist('toast')
             <flux:toast.group>

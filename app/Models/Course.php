@@ -16,4 +16,12 @@ class Course extends Model
     {
         return $this->hasMany(Schedule::class);
     }
+
+    /**
+     * Relasi: Satu Mata Kuliah bisa memiliki beberapa data absensi
+     */
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

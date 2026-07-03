@@ -67,4 +67,12 @@ class User extends Authenticatable implements PasskeyUser
     {
         return $this->hasMany(Attendance::class);
     }
+
+    /**
+     * Relasi: Jadwal-jadwal yang diajar oleh Dosen ini
+     */
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class);
+    }
 }

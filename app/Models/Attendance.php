@@ -8,22 +8,20 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 // Menggunakan PHP Attributes agar seragam dengan User & Course
 #[Fillable([
-    'schedule_id', 
     'user_id', 
-    'status',        // 'Hadir', 'Izin', 'Sakit', 'Alpa'
-    'device_info',   // Untuk validasi device mahasiswa (keamanan)
-    'latitude',      // Geolocation koordinat X
-    'longitude',     // Geolocation koordinat Y
-    'scanned_at'     // Waktu presensi dilakukan
+    'course_id',
+    'attendance_date',
+    'status',        // 'hadir', 'izin', 'sakit', 'alpha'
+    'check_in_time'  // Waktu presensi dilakukan
 ])]
 class Attendance extends Model
 {
     /**
-     * Relasi: Catatan presensi ini merujuk ke Jadwal Kuliah tertentu
+     * Relasi: Catatan presensi ini merujuk ke Course tertentu
      */
-    public function schedule(): BelongsTo
+    public function course(): BelongsTo
     {
-        return $this->belongsTo(Schedule::class, 'schedule_id');
+        return $this->belongsTo(Course::class, 'course_id');
     }
 
     /**
