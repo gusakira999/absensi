@@ -16,6 +16,9 @@
                         <flux:sidebar.item icon="home" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>
                             {{ __('Dashboard') }}
                         </flux:sidebar.item>
+                        <flux:sidebar.item icon="users" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>
+                            {{ __('Manajemen User') }}
+                        </flux:sidebar.item>
                         <flux:sidebar.item icon="folder-git-2" :href="route('admin.courses')" :current="request()->routeIs('admin.courses')" wire:navigate>
                             {{ __('Manajemen Mata Kuliah') }}
                         </flux:sidebar.item>
@@ -23,7 +26,7 @@
                             {{ __('Kelola Jadwal') }}
                         </flux:sidebar.item>
                         <flux:sidebar.item icon="chart-line" :href="route('admin.reports')" :current="request()->routeIs('admin.reports')" wire:navigate>
-                            {{ __('Laporan & Monitoring') }}
+                            {{ __('Monitoring Kehadiran') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>
                 @elseif(auth()->user() && auth()->user()->role === 'dosen')

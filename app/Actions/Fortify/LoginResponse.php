@@ -31,8 +31,13 @@ class LoginResponse implements LoginResponseContract
                     break;
             }
 
-            return redirect()->intended($intended ?? $destination);
+            // Untuk menghindari kasus user salah masuk role (karena url.intended tersisa
+            // dari percobaan akses sebelumnya), kita TIDAK pakai intended.
+            // Selalu arahkan ke dashboard sesuai role.
+            return redirect()->to($destination);
+
         }
+
 
         return redirect()->intended($intended ?? config('fortify.home'));
     }
