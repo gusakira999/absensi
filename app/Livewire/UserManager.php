@@ -19,6 +19,11 @@ class UserManager extends Component
 
     public string $searchTerm = '';
 
+    public function mount(): void
+    {
+        $this->form = new UserForm($this, 'form');
+    }
+
 
     protected function userQuery()
     {

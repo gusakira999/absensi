@@ -1,6 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Course;
+use Illuminate\Support\Facades\DB;
+
+// Debug route
+Route::get('/debug-courses', function () {
+    $raw = DB::table('courses')->get();
+    $eloquent = Course::all();
+    
+    return response()->json([
+        'raw_count' => count($raw),
+        'eloquent_count' => count($eloquent),
+        'raw_data' => $raw,
+        'eloquent_data' => $eloquent->toArray(),
+    ]);
+});
 
 Route::view('/', 'welcome')->name('home');
 
@@ -23,7 +38,7 @@ Route::get('admin/dashboard', function () {
 // Admin pages
 Route::middleware(['auth', 'verified', EnsureAdmin::class])->group(function () {
     Route::livewire('admin/courses', 'pages::course.index')->name('admin.courses');
-    Route::livewire('admin/users', 'user-manager')->name('admin.users');
+    Route::view('admin/users', 'admin.users')->name('admin.users');
     Route::view('admin/schedules', 'admin.schedules')->name('admin.schedules');
     Route::view('admin/reports', 'admin.reports')->name('admin.reports');
 });

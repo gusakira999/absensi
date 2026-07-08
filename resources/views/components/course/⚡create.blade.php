@@ -14,7 +14,8 @@ new class extends Component
         Flux::modal('create-course')->close();
 
         session()->flash('success', 'Mata Kuliah berhasil ditambahkan.');
-
+        
+        $this->dispatch('course-updated');
         $this->redirectRoute('admin.courses', navigate: true);
     }
 

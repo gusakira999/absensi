@@ -2,6 +2,7 @@
 
 use Livewire\Component;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\WithPagination;
 use App\Models\Course;
 
@@ -13,6 +14,12 @@ new class extends Component
     public function courses()
     {
         return Course::latest()->paginate(10);
+    }
+
+    #[On('course-updated')]
+    public function refreshCourses()
+    {
+        $this->resetPage();
     }
 
     public function edit($id)

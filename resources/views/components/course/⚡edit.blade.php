@@ -23,6 +23,8 @@ new class extends Component
         $this->form->update();
         Flux::modal('edit-course')->close();
         session()->flash('success', 'Mata Kuliah berhasil diperbarui.');
+        
+        $this->dispatch('course-updated');
         $this->redirectRoute('admin.courses', navigate: true);
     }
 
@@ -45,6 +47,8 @@ new class extends Component
         $this->form->course->delete();
         Flux::modal('delete-course')->close();
         session()->flash('success', 'Mata Kuliah berhasil dihapus.');
+        
+        $this->dispatch('course-updated');
         $this->redirectRoute('admin.courses', navigate: true);
     }
 }
