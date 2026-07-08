@@ -19,44 +19,51 @@ class UserManager extends Component
 
     public string $searchTerm = '';
 
+    public string $selectedRole = 'dosen'; // Tab yang aktif
+
     public function mount(): void
     {
         $this->form = new UserForm($this, 'form');
     }
 
-
-    protected function userQuery()
+    protected function userQueryByRole($role)
     {
-        return User::query()->whereIn('role', ['dosen', 'mahasiswa']);
+        return User::query()->where('role', $role);
     }
 
     public function render()
     {
-        $query = $this->userQuery();
-
+        // Query untuk Dosen
+        $dosenQuery = $this->userQueryByRole('dosen');
         if ($this->searchTerm !== '') {
-            $query->where(function ($q) {
+            $dosenQuery->where(function ($q) {
                 $q->where('name', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('nim', 'like', '%' . $this->searchTerm . '%')
-                    ->orWhere('role', 'like', '%' . $this->searchTerm . '%');
+                    ->orWhere('email', 'like', '%' . $this->searchTerm . '%');
             });
         }
+        $dosens = $dosenQuery->orderBy('created_at', 'desc')->paginate(10, pageName: 'dosens_page');
 
-        $users = $query->orderBy('created_at', 'desc')->paginate(10);
+        // Query untuk Mahasiswa
+        $mahasiswaQuery = $this->userQueryByRole('mahasiswa');
+        if ($this->searchTerm !== '') {
+            $mahasiswaQuery->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->searchTerm . '%')
+                    ->orWhere('email', 'like', '%' . $this->searchTerm . '%')
+                    ->orWhere('nim', 'like', '%' . $this->searchTerm . '%');
+            });
+        }
+        $mahasiswas = $mahasiswaQuery->orderBy('created_at', 'desc')->paginate(10, pageName: 'mahasiswas_page');
 
-        return view('livewire.user-manager', compact('users'));
+        return view('livewire.user-manager', compact('dosens', 'mahasiswas'));
     }
 
-    public function openCreateForm(): void
+    public function openCreateForm(string $role = 'mahasiswa'): void
     {
         $this->editingId = null;
-
         $this->form->reset();
         $this->showForm = true;
-        $this->form->role = 'mahasiswa';
+        $this->form->role = $role;
     }
-
 
     public function openEditForm(int $userId): void
     {
@@ -69,7 +76,6 @@ class UserManager extends Component
         $this->form->setUser($user);
         $this->showForm = true;
     }
-
 
     public function save(): void
     {
@@ -98,9 +104,14 @@ class UserManager extends Component
     public function closeForm(): void
     {
         $this->showForm = false;
+        $this->resetPage();
         $this->form->reset();
+    }
+
+    public function resetForm(): void
+    {
         $this->resetValidation();
+        $this->form->reset();
     }
 }
-
 

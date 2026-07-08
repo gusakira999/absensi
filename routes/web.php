@@ -1,21 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Course;
-use Illuminate\Support\Facades\DB;
-
-// Debug route
-Route::get('/debug-courses', function () {
-    $raw = DB::table('courses')->get();
-    $eloquent = Course::all();
-    
-    return response()->json([
-        'raw_count' => count($raw),
-        'eloquent_count' => count($eloquent),
-        'raw_data' => $raw,
-        'eloquent_data' => $eloquent->toArray(),
-    ]);
-});
 
 Route::view('/', 'welcome')->name('home');
 
