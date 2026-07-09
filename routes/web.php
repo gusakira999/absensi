@@ -23,7 +23,7 @@ Route::get('admin/dashboard', function () {
 // Admin pages
 Route::middleware(['auth', 'verified', EnsureAdmin::class])->group(function () {
     Route::livewire('admin/courses', 'pages::course.index')->name('admin.courses');
-    Route::view('admin/users', 'admin.users')->name('admin.users');
+    Route::livewire('admin/users', 'user-manager')->name('admin.users');
     Route::view('admin/schedules', 'admin.schedules')->name('admin.schedules');
     Route::view('admin/reports', 'admin.reports')->name('admin.reports');
 });

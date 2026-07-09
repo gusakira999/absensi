@@ -52,6 +52,7 @@
                 <table class="w-full text-sm text-zinc-900 dark:text-zinc-100">
                     <thead class="bg-zinc-100 dark:bg-zinc-800 border-b">
                         <tr>
+                            <th class="px-6 py-3 text-left font-semibold">No</th>
                             <th class="px-6 py-3 text-left font-semibold">Nama</th>
                             <th class="px-6 py-3 text-left font-semibold">Email</th>
                             <th class="px-6 py-3 text-left font-semibold">Bergabung</th>
@@ -61,6 +62,9 @@
                     <tbody class="divide-y">
                         @forelse ($dosens as $dosen)
                             <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700 transition">
+                                <td class="px-6 py-4 font-medium text-zinc-500 dark:text-zinc-400">
+                                    {{ $loop->iteration + $dosens->firstItem() - 1 }}
+                                </td>
                                 <td class="px-6 py-4 font-medium">{{ $dosen->name }}</td>
                                 <td class="px-6 py-4">{{ $dosen->email }}</td>
                                 <td class="px-6 py-4 text-zinc-600 dark:text-zinc-400 text-xs">
@@ -81,7 +85,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400">
+                                <td colspan="5" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400">
                                     Tidak ada data dosen ditemukan
                                 </td>
                             </tr>
@@ -115,6 +119,7 @@
                 <table class="w-full text-sm text-zinc-900 dark:text-zinc-100">
                     <thead class="bg-zinc-100 dark:bg-zinc-800 border-b">
                         <tr>
+                            <th class="px-6 py-3 text-left font-semibold">No</th>
                             <th class="px-6 py-3 text-left font-semibold">Nama</th>
                             <th class="px-6 py-3 text-left font-semibold">Email</th>
                             <th class="px-6 py-3 text-left font-semibold">NIM</th>
@@ -125,6 +130,9 @@
                     <tbody class="divide-y">
                         @forelse ($mahasiswas as $mahasiswa)
                             <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700 transition">
+                                <td class="px-6 py-4 font-medium text-zinc-500 dark:text-zinc-400">
+                                    {{ $loop->iteration + $mahasiswas->firstItem() - 1 }}
+                                </td>
                                 <td class="px-6 py-4 font-medium">{{ $mahasiswa->name }}</td>
                                 <td class="px-6 py-4">{{ $mahasiswa->email }}</td>
                                 <td class="px-6 py-4 font-mono text-blue-600 dark:text-blue-400">
@@ -148,7 +156,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400">
+                                <td colspan="6" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400">
                                     Tidak ada data mahasiswa ditemukan
                                 </td>
                             </tr>

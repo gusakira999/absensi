@@ -52,6 +52,7 @@
                 <table class="w-full text-sm text-zinc-900 dark:text-zinc-100">
                     <thead class="bg-zinc-100 dark:bg-zinc-800 border-b">
                         <tr>
+                            <th class="px-6 py-3 text-left font-semibold">No</th>
                             <th class="px-6 py-3 text-left font-semibold">Nama</th>
                             <th class="px-6 py-3 text-left font-semibold">Email</th>
                             <th class="px-6 py-3 text-left font-semibold">Bergabung</th>
