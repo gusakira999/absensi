@@ -247,7 +247,6 @@
     <div class="cta-row">
       <!-- TOMBOL CTA YANG SUDAH DIPERBAIKI -->
       <a href="{{ route('login') }}" class="cta">Login Sekarang</a>
-      <a href="#" class="cta-secondary">Lihat Panduan</a>
     </div>
   </div>
 
@@ -275,7 +274,7 @@
     </div>
   </div>
 
-  <footer>Absensi Mahasiswa &middot; Universitas Anda &middot; {{ date('Y') }}</footer>
+  <footer>Absensi Mahasiswa &middot; Universitas From Temu &middot; {{ date('Y') }}</footer>
 </div>
 </body>
 </html>

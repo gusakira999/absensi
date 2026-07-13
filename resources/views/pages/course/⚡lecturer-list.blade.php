@@ -68,12 +68,16 @@ new class extends Component
                 <flux:separator variant="subtle" />
 
                 <div class="flex gap-2 pt-2">
-                    <flux:button variant="outline" size="sm" class="flex-1">
-                        Lihat Rekap
-                    </flux:button>
-                    <flux:button variant="outline" size="sm" class="flex-1">
-                        Jadwal
-                    </flux:button>
+                    <a href="{{ route('dosen.recap') }}" class="block">
+                        <flux:button variant="outline" size="sm" class="flex-1">
+                            Lihat Rekap
+                        </flux:button>
+                    </a>
+                    <a href="{{ route('dosen.schedules') }}" class="block">
+                        <flux:button variant="outline" size="sm" class="flex-1">
+                            Jadwal
+                        </flux:button>
+                    </a>
                 </div>
             </flux:card>
         @empty

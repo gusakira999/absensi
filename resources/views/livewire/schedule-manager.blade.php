@@ -45,7 +45,7 @@
                             <div class="font-medium">{{ $s->lecturerUser?->name }}</div>
                             <div class="text-xs text-zinc-500">{{ $s->lecturerUser?->email }}</div>
                         </td>
-                        <td class="px-6 py-4">{{ $s->day }}</td>
+                <td class="px-6 py-4">{{ $s->day === 'mon' ? 'Senin' : ($s->day === 'tue' ? 'Selasa' : ($s->day === 'wed' ? 'Rabu' : ($s->day === 'thu' ? 'Kamis' : ($s->day === 'fri' ? 'Jumat' : ($s->day === 'sat' ? 'Sabtu' : ($s->day === 'sun' ? 'Minggu' : $s->day)))))) }}</td>
                         <td class="px-6 py-4">{{ $s->start_time }} - {{ $s->end_time }}</td>
                         <td class="px-6 py-4">{{ $s->room }}</td>
                         <td class="px-6 py-4 text-center space-x-2">
@@ -117,6 +117,7 @@
                             <option value="fri">Jumat</option>
                             <option value="sat">Sabtu</option>
                             <option value="sun">Minggu</option>
+
                         </select>
                         @error('dayInput') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
