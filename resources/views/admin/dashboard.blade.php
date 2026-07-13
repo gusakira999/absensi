@@ -195,7 +195,54 @@
     </div>
   </aside>
 
-  <main class="main">
+<main class="main">
+    @php
+      use App\Models\User;
+      use App\Models\Course;
+      use App\Models\Attendance;
+      use Carbon\Carbon;
+
+      $totalMahasiswa = User::query()->where('role', 'mahasiswa')->count();
+      $totalDosen = User::query()->where('role', 'dosen')->count();
+      $totalMataKuliah = Course::query()->count();
+
+      $today = Carbon::today()->toDateString();
+
+      $totalAttendanceToday = Attendance::query()
+        ->whereDate('attendance_date', $today)
+        ->count();
+
+      $hadirToday = Attendance::query()
+        ->whereDate('attendance_date', $today)
+        ->where('status', 'hadir')
+        ->count();
+
+      $presencePct = $totalAttendanceToday > 0
+        ? round(($hadirToday / $totalAttendanceToday) * 100)
+        : 0;
+
+      // Data grafik mingguan (7 hari terakhir)
+      $days = [];
+      for ($i = 6; $i >= 0; $i--) {
+        $d = Carbon::today()->subDays($i);
+        $days[] = $d->toDateString();
+      }
+
+      $weekly = collect($days)->map(function ($date) {
+        $total = Attendance::query()->whereDate('attendance_date', $date)->count();
+        $hadir = Attendance::query()->whereDate('attendance_date', $date)->where('status', 'hadir')->count();
+        $pct = $total > 0 ? round(($hadir / $total) * 100) : 0;
+        return ['date' => Carbon::parse($date)->format('d M'), 'pct' => $pct];
+      });
+
+      // Aktivitas terbaru: ambil 10 attendance terbaru
+      $latestActivities = Attendance::query()
+        ->with(['student', 'course'])
+        ->orderByDesc('created_at')
+        ->limit(10)
+        ->get();
+    @endphp
+
     <h1>Admin Dashboard</h1>
     <p class="page-desc">Ringkasan kondisi kehadiran mahasiswa hari ini.</p>
 
@@ -204,35 +251,78 @@
         <div class="stat-icon indigo">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
-        <!-- Ganti angka statis ini dengan variabel dari controller nanti -->
-        <div class="stat-value">1.284</div>
+        <div class="stat-value">{{ number_format($totalMahasiswa) }}</div>
         <div class="stat-label">Total Mahasiswa</div>
       </div>
       <div class="stat-card">
         <div class="stat-icon emerald">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
         </div>
-        <div class="stat-value">42</div>
-        <div class="stat-label">Mata Kuliah Aktif</div>
+        <div class="stat-value">{{ number_format($totalDosen) }}</div>
+        <div class="stat-label">Total Dosen</div>
       </div>
       <div class="stat-card">
         <div class="stat-icon amber">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
         </div>
-        <div class="stat-value">18</div>
-        <div class="stat-label">Kelas Hari Ini</div>
+        <div class="stat-value">{{ number_format($totalMataKuliah) }}</div>
+        <div class="stat-label">Total Mata Kuliah</div>
       </div>
       <div class="stat-card">
         <div class="stat-icon indigo">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
         </div>
-        <div class="stat-value">92%</div>
-        <div class="stat-label">Tingkat Kehadiran</div>
+        <div class="stat-value">{{ $presencePct }}%</div>
+        <div class="stat-label">Kehadiran Hari Ini</div>
       </div>
     </div>
 
     <div class="panel">
-      Placeholder untuk panel admin: manajemen mata kuliah, jadwal, dan laporan kehadiran akan tampil di sini.
+      <h2 style="margin:0 0 14px; font-size:18px; font-weight:700; color:var(--text-hi);">Grafik Kehadiran (Mingguan)</h2>
+
+      <div style="display:flex; gap:12px; align-items:flex-end; height:180px; padding:10px 6px;">
+        @foreach($weekly as $point)
+          <div style="flex:1; text-align:center;">
+            <div style="height:{{ $point['pct'] * 1.6 }}px; min-height:6px; background:rgba(79,70,229,0.18); border:1px solid rgba(79,70,229,0.35); border-radius:10px;"></div>
+            <div style="font-size:12px; color:var(--text-lo); margin-top:8px;">{{ $point['date'] }}</div>
+            <div style="font-size:12px; font-weight:700; color:var(--text-hi); margin-top:6px;">{{ $point['pct'] }}%</div>
+          </div>
+        @endforeach
+      </div>
+
+      <div style="margin-top:16px; color:var(--text-lo); font-size:14px;">
+        Catatan: persentase dihitung dari <b>jumlah status 'hadir'</b> dibanding total record absensi hari tersebut.
+      </div>
+    </div>
+
+    <div style="margin-top:16px;" class="panel">
+      <h2 style="margin:0 0 14px; font-size:18px; font-weight:700; color:var(--text-hi);">Aktivitas Terbaru</h2>
+      <div style="overflow:auto;">
+        <table style="width:100%; border-collapse:collapse; font-size:14px;">
+          <thead>
+            <tr>
+              <th style="text-align:left; padding:10px 6px; border-bottom:1px solid var(--border);">Waktu</th>
+              <th style="text-align:left; padding:10px 6px; border-bottom:1px solid var(--border);">Mahasiswa</th>
+              <th style="text-align:left; padding:10px 6px; border-bottom:1px solid var(--border);">Course</th>
+              <th style="text-align:left; padding:10px 6px; border-bottom:1px solid var(--border);">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @forelse($latestActivities as $a)
+              <tr>
+                <td style="padding:10px 6px; border-bottom:1px solid var(--border); color:var(--text-lo);">{{ $a->created_at?->format('d M Y H:i') }}</td>
+                <td style="padding:10px 6px; border-bottom:1px solid var(--border);">{{ $a->student?->name ?? '-' }}</td>
+                <td style="padding:10px 6px; border-bottom:1px solid var(--border);">{{ $a->course?->course_name ?? '-' }}</td>
+                <td style="padding:10px 6px; border-bottom:1px solid var(--border); font-weight:700;">{{ $a->status }}</td>
+              </tr>
+            @empty
+              <tr>
+                <td colspan="4" style="padding:14px 6px; color:var(--text-lo);">Belum ada aktivitas absensi.</td>
+              </tr>
+            @endforelse
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
 

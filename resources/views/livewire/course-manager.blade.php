@@ -131,21 +131,29 @@
                             @enderror
                         </div>
 
-                        <!-- Lecturer -->
+                        <!-- Lecturer (pilihan dosen) -->
                         <div>
                             <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">
-                                Nama Dosen
+                                Dosen
                             </label>
-                            <input 
-                                type="text" 
-                                wire:model.defer="lecturer" 
+                            <select
+                                wire:model.defer="lecturer_id"
                                 class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-700 text-zinc-900 dark:text-zinc-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                placeholder="Contoh: Dr. Budi Santoso"
                             >
-                            @error('lecturer')
+                                <option value="0">-- Pilih Dosen --</option>
+                                @php
+                                    $dosens = \App\Models\User::query()->where('role','dosen')->orderBy('name')->get();
+                                @endphp
+                                @foreach($dosens as $d)
+                                    <option value="{{ $d->id }}">{{ $d->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('lecturer_id')
                                 <p class="text-red-600 text-xs mt-1">{{ $message }}</p>
                             @enderror
                         </div>
+
+
 
                         <!-- Semester -->
                         <div>
