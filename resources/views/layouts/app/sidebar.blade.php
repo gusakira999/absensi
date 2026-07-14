@@ -61,15 +61,9 @@
                         <flux:sidebar.item icon="check" :href="route('mahasiswa.absensi')" :current="request()->routeIs('mahasiswa.absensi')" wire:navigate>
                             {{ __('Absensi') }}
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="clock" :href="route('mahasiswa.deadlines')" :current="request()->routeIs('mahasiswa.deadlines')" wire:navigate>
-                            {{ __('Deadline Tugas') }}
-                        </flux:sidebar.item>
-                        <flux:sidebar.item icon="chart-line" :href="route('mahasiswa.tracker')" :current="request()->routeIs('mahasiswa.tracker')" wire:navigate>
-                            {{ __('Tracker IPK') }}
-                        </flux:sidebar.item>
-                        <flux:sidebar.item icon="book-open" :href="route('mahasiswa.notes')" :current="request()->routeIs('mahasiswa.notes')" wire:navigate>
-                            {{ __('Catatan Materi') }}
-                        </flux:sidebar.item>
+
+
+
                     </flux:sidebar.group>
                 @else
                     <flux:sidebar.group :heading="__('Platform')" class="grid">

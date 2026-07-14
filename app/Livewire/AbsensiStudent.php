@@ -42,9 +42,30 @@ class AbsensiStudent extends Component
             ->paginate(10);
     }
 
+    private function isScheduleNow(Schedule $schedule): bool
+    {
+
+        $now = Carbon::now();
+
+        // start_time/end_time disimpan dalam format H:i:s (sesuai field di database)
+        $today = Carbon::today();
+        $start = Carbon::parse($today->toDateString().' '.$schedule->start_time);
+        $end = Carbon::parse($today->toDateString().' '.$schedule->end_time);
+
+        // inklusif: start <= now <= end
+        return $now->greaterThanOrEqualTo($start) && $now->lessThanOrEqualTo($end);
+    }
+
     public function checkIn(int $scheduleId): void
     {
         $schedule = Schedule::query()->with(['course'])->findOrFail($scheduleId);
+
+        // jika belum jamnya, blokir
+        if (! $this->isScheduleNow($schedule)) {
+            $this->dispatch('notify', message: 'Belum jam absen untuk jadwal ini', type: 'error');
+            return;
+        }
+
         $userId = (int) auth()->id();
 
         $attendanceDate = $this->getToday()->toDateString();
