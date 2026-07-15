@@ -67,12 +67,7 @@
                 ->orderBy('start_time')
                 ->get();
 
-            $scheduleNow = $schedulesToday->first(function($s) use ($today) {
-                $now = \Carbon\Carbon::now();
-                $start = \Carbon\Carbon::parse($today->toDateString().' '.$s->start_time);
-                $end = \Carbon\Carbon::parse($today->toDateString().' '.$s->end_time);
-                return $now->greaterThanOrEqualTo($start) && $now->lessThanOrEqualTo($end);
-            });
+            $scheduleNow = $schedulesToday->first(); // DEMO MODE: Selalu aktif asalkan ada jadwal
         @endphp
 
         <div class="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
@@ -84,13 +79,11 @@
 
                 <div class="flex items-center gap-3">
                     @if($scheduleNow)
-                        <button
-                            type="button"
-                            class="px-4 py-2 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
-                            disabled
+                        <a href="{{ route('mahasiswa.absensi') }}"
+                            class="px-4 py-2 text-sm bg-indigo-600 text-white rounded hover:bg-indigo-700 transition inline-block text-center"
                         >
                             Absen Sekarang
-                        </button>
+                        </a>
                         <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">Sedang jam kuliah</span>
                     @else
                         <button

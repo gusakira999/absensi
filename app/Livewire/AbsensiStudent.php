@@ -44,16 +44,8 @@ class AbsensiStudent extends Component
 
     private function isScheduleNow(Schedule $schedule): bool
     {
-
-        $now = Carbon::now();
-
-        // start_time/end_time disimpan dalam format H:i:s (sesuai field di database)
-        $today = Carbon::today();
-        $start = Carbon::parse($today->toDateString().' '.$schedule->start_time);
-        $end = Carbon::parse($today->toDateString().' '.$schedule->end_time);
-
-        // inklusif: start <= now <= end
-        return $now->greaterThanOrEqualTo($start) && $now->lessThanOrEqualTo($end);
+        // Bypass pengecekan jam untuk keperluan DEMO PRAKTIKUM
+        return true;
     }
 
     public function checkIn(int $scheduleId): void

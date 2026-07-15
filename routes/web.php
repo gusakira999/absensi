@@ -39,7 +39,6 @@ Route::middleware(['auth', 'verified', EnsureDosen::class])->group(function () {
     Route::livewire('dosen/courses', 'pages::course.lecturer-list')->name('dosen.courses');
     Route::view('dosen/schedules', 'dosen.schedules')->name('dosen.schedules');
     Route::view('dosen/recap', 'dosen.recap')->name('dosen.recap');
-    Route::view('dosen/reports', 'dosen.reports')->name('dosen.reports');
 });
 
 Route::get('mahasiswa/dashboard', function () {
@@ -50,9 +49,6 @@ Route::get('mahasiswa/dashboard', function () {
 Route::middleware(['auth', 'verified', EnsureMahasiswa::class])->group(function () {
     Route::livewire('mahasiswa/jadwal', 'pages::course.student-list')->name('mahasiswa.jadwal');
     Route::view('mahasiswa/absensi', 'mahasiswa.absensi')->name('mahasiswa.absensi');
-    Route::view('mahasiswa/deadlines', 'mahasiswa.deadlines')->name('mahasiswa.deadlines');
-    Route::view('mahasiswa/tracker', 'mahasiswa.tracker')->name('mahasiswa.tracker');
-    Route::view('mahasiswa/notes', 'mahasiswa.notes')->name('mahasiswa.notes');
 });
 
 

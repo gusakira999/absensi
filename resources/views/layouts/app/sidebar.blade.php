@@ -43,9 +43,6 @@
                         <flux:sidebar.item icon="check" :href="route('dosen.recap')" :current="request()->routeIs('dosen.recap')" wire:navigate>
                             {{ __('Rekap Absensi') }}
                         </flux:sidebar.item>
-                        <flux:sidebar.item icon="chart-line" :href="route('dosen.reports')" :current="request()->routeIs('dosen.reports')" wire:navigate>
-                            {{ __('Laporan Kehadiran') }}
-                        </flux:sidebar.item>
                         <flux:sidebar.item icon="cog" :href="route('profile.edit')" :current="request()->routeIs('profile.edit')" wire:navigate>
                             {{ __('Settings') }}
                         </flux:sidebar.item>
