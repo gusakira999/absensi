@@ -48,22 +48,22 @@
             <p class="text-sm text-zinc-600">Ringkasan kondisi kehadiran mahasiswa hari ini.</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="p-4 rounded-lg bg-white shadow-sm border border-zinc-200">
-                <div class="text-sm text-zinc-500">Total Mahasiswa</div>
-                <div class="text-2xl font-semibold">{{ number_format($totalMahasiswa) }}</div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="p-6 rounded-2xl bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border-0 ring-1 ring-slate-100">
+                 <div class="text-sm font-medium text-slate-500">Total Mahasiswa</div>
+                 <div class="text-3xl font-bold text-slate-800 mt-2">{{ number_format($totalMahasiswa) }}</div>
             </div>
-            <div class="p-4 rounded-lg bg-white shadow-sm border border-zinc-200">
-                <div class="text-sm text-zinc-500">Total Dosen</div>
-                <div class="text-2xl font-semibold">{{ number_format($totalDosen) }}</div>
+            <div class="p-6 rounded-2xl bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border-0 ring-1 ring-slate-100">
+                <div class="text-sm font-medium text-slate-500">Total Dosen</div>
+                <div class="text-3xl font-bold text-slate-800 mt-2">{{ number_format($totalDosen) }}</div>
             </div>
-            <div class="p-4 rounded-lg bg-white shadow-sm border border-zinc-200">
-                <div class="text-sm text-zinc-500">Total Mata Kuliah</div>
-                <div class="text-2xl font-semibold">{{ number_format($totalMataKuliah) }}</div>
+            <div class="p-6 rounded-2xl bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border-0 ring-1 ring-slate-100">
+                <div class="text-sm font-medium text-slate-500">Total Mata Kuliah</div>
+                <div class="text-3xl font-bold text-blue-600 mt-2">{{ number_format($totalMataKuliah) }}</div>
             </div>
-            <div class="p-4 rounded-lg bg-white shadow-sm border border-zinc-200">
-                <div class="text-sm text-zinc-500">Kehadiran Hari Ini</div>
-                <div class="text-2xl font-semibold">{{ $presencePct }}%</div>
+            <div class="p-6 rounded-2xl bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border-0 ring-1 ring-slate-100">
+                <div class="text-sm font-medium text-slate-500">Kehadiran Hari Ini</div>
+                <div class="text-3xl font-bold text-green-500 mt-2">{{ $presencePct }}%</div>
             </div>
         </div>
 
@@ -104,11 +104,19 @@
                     <tbody>
                         @forelse($latestActivities as $a)
                             <tr>
-                                <td class="py-2 px-2 border-b border-zinc-100 text-zinc-600">{{ $a->created_at?->format('d M Y H:i') }}</td>
-                                <td class="py-2 px-2 border-b border-zinc-100">{{ $a->student?->name ?? '-' }}</td>
-                                <td class="py-2 px-2 border-b border-zinc-100">{{ $a->course?->course_name ?? '-' }}</td>
-                                <td class="py-2 px-2 border-b border-zinc-100 font-semibold">{{ $a->status }}</td>
-                            </tr>
+                                <td class="py-3 px-3 border-b border-zinc-100 text-zinc-600">{{ $a->created_at?->format('d M Y H:i') }}</td>
+                                <td class="py-3 px-3 border-b border-zinc-100 font-medium">{{ $a->student?->name ?? '-' }}</td>
+                                <td class="py-3 px-3 border-b border-zinc-100">{{ $a->course?->course_name ?? '-' }}</td>
+                                <td class="py-3 px-3 border-b border-zinc-100">
+                       @if(strtolower($a->status) === 'hadir')
+                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold tracking-wide">Hadir</span>
+                      @elseif(strtolower($a->status) === 'izin')
+                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-bold tracking-wide">Izin</span>
+                      @else
+                    <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold tracking-wide">{{ ucfirst($a->status) }}</span>
+                   @endif
+                     </td>
+                        </tr>
                         @empty
                             <tr>
                                 <td colspan="4" class="py-3 px-2 text-zinc-600">Belum ada aktivitas absensi.</td>

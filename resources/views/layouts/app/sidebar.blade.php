@@ -144,8 +144,8 @@
             </flux:dropdown>
         </flux:header>
 
-        <div class="flex-1 w-full">
-            {{ $slot }}
+        <div class="flex-1 w-full bg-slate-50 min-h-screen">
+             {{ $slot }}
         </div>
 
         @persist('toast')
