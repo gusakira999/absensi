@@ -8,37 +8,38 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* WARNA DEFAULT (LIGHT MODE) */
+  /* WARNA DEFAULT (LIGHT MODE - TEMA HIJAU TUA) */
   :root{
-    --bg: #f6f7fb;
+    --bg: #f8faf9;
     --card: #ffffff;
-    --border: #e7e9f0;
-    --text-hi: #171a23;
-    --text-lo: #6b7086;
-    --accent: #4f46e5;
-    --accent-soft: #ecebfd;
-    --amber: #f59e0b;
-    --emerald: #10b981;
+    --border: #e2e8e4;
+    --text-hi: #0f1c15;
+    --text-lo: #5c6b63;
+    --accent: #1a4d2e;       /* Hijau Hutan Gelap */
+    --accent-soft: #e6f0ea;
+    --amber: #ca8a04;
+    --emerald: #059669;
   }
 
   /* WARNA KHUSUS DARK MODE */
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0a0e13;
-      --card: #12171e;
-      --border: #22282f;
-      --text-hi: #f2f4f5;
-      --text-lo: #9aa4ad;
-      --accent-soft: rgba(79, 70, 229, 0.15);
+      --bg: #050a07;         /* Hitam kehijauan sangat gelap */
+      --card: #0a140f;       /* Card hijau hitam */
+      --border: #1c2e24;     /* Border hijau gelap */
+      --text-hi: #e8f0eb;    /* Putih kehijauan terang */
+      --text-lo: #8a9b91;    /* Abu kehijauan */
+      --accent: #4ade80;     /* Hijau terang untuk kontras di mode gelap */
+      --accent-soft: rgba(74, 222, 128, 0.1);
     }
     
     /* Penyesuaian input field di dark mode */
     input[type="email"], input[type="password"] {
-        background: #1a202c !important;
-        border-color: #2d3748 !important;
+        background: #0f1f17 !important;
+        border-color: #1c2e24 !important;
         color: var(--text-hi) !important;
     }
-    input::placeholder { color: #4a5568 !important; }
+    input::placeholder { color: #4a6354 !important; }
   }
 
   *{box-sizing:border-box;}
@@ -52,19 +53,22 @@
     min-height:100vh; display:flex; flex-direction:column; align-items:center;
     padding:56px 20px 60px; position:relative;
   }
+  
+  /* GLOW EFFECT DIUBAH JADI HIJAU TUA & HITAM */
   .page::before{
     content:""; position:absolute; top:-60px; left:50%; transform:translateX(-50%);
     width:600px; height:360px;
-    background: radial-gradient(circle at 30% 20%, rgba(79,70,229,0.14), transparent 60%),
-                radial-gradient(circle at 75% 30%, rgba(16,185,129,0.12), transparent 55%),
-                radial-gradient(circle at 55% 70%, rgba(245,158,11,0.10), transparent 55%);
-    z-index:0; filter:blur(6px); pointer-events:none;
+    background: radial-gradient(circle at 30% 20%, rgba(26, 77, 46, 0.2), transparent 60%),
+                radial-gradient(circle at 75% 30%, rgba(0, 0, 0, 0.15), transparent 55%),
+                radial-gradient(circle at 55% 70%, rgba(5, 150, 105, 0.15), transparent 55%);
+    z-index:0; filter:blur(8px); pointer-events:none;
   }
 
   .brand{
     display:flex; align-items:center; gap:9px;
     font-family:'Space Grotesk', sans-serif; font-weight:600; font-size:17px;
     margin-bottom:40px; position:relative; z-index:1;
+    color: var(--accent);
   }
   .brand .dot{ width:9px; height:9px; border-radius:2px; background:var(--accent); }
 
@@ -72,9 +76,9 @@
     position:relative; z-index:1;
     background:var(--card); border:1px solid var(--border); border-radius:16px;
     width:100%; max-width:420px; padding:40px 36px 32px;
-    box-shadow:0 8px 30px rgba(23,26,35,0.05); text-align:center;
+    box-shadow:0 8px 30px rgba(15, 28, 21, 0.05); text-align:center;
   }
-  @media (prefers-color-scheme: dark) { .card { box-shadow: 0 8px 30px rgba(0,0,0,0.3); } }
+  @media (prefers-color-scheme: dark) { .card { box-shadow: 0 8px 30px rgba(0,0,0,0.4); } }
 
   .card-icon{
     width:52px; height:52px; border-radius:12px; background:var(--accent-soft);
@@ -96,7 +100,7 @@
 
   input[type="email"], input[type="password"]{
     width:100%; padding:12px 14px; border-radius:9px; border:1px solid var(--border);
-    background:#fafafe; font-size:14.5px; color:var(--text-hi); font-family:'Inter', sans-serif;
+    background:#f8faf9; font-size:14.5px; color:var(--text-hi); font-family:'Inter', sans-serif;
     transition: all 0.2s;
   }
   input:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
@@ -104,13 +108,19 @@
   .remember{ display:flex; align-items:center; gap:8px; font-size:14px; color:var(--text-lo); margin:4px 0 22px; cursor:pointer; }
   .remember input{ width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
 
+  /* GRADASI TOMBOL: HIJAU TUA KE HITAM */
   .submit{
     width:100%; padding:13px; border:none; border-radius:9px;
-    background:linear-gradient(135deg, var(--accent), #6d28d9); color:#fff;
+    background: linear-gradient(135deg, #1a4d2e 0%, #000000 100%); 
+    color:#fff;
     font-weight:600; font-size:15px; font-family:'Inter', sans-serif; cursor:pointer;
-    box-shadow:0 6px 16px rgba(79,70,229,0.25); transition: filter 0.2s;
+    box-shadow:0 6px 16px rgba(26, 77, 46, 0.3); 
+    transition: all 0.2s;
   }
-  .submit:hover{ filter:brightness(1.1); }
+  .submit:hover{ 
+    opacity: 0.9; 
+    transform: translateY(-1px); 
+  }
 
   .divider{ display:flex; align-items:center; gap:14px; color:var(--text-lo); font-size:13px; margin:26px 0 20px; }
   .divider::before, .divider::after{ content:""; flex:1; height:1px; background:var(--border); }
@@ -129,8 +139,8 @@
     padding: 12px; border-radius: 9px; font-size: 14px; margin-bottom: 20px; text-align: left;
   }
   @media (prefers-color-scheme: dark) {
-    .alert-error { background: rgba(153, 27, 27, 0.1); border-color: rgba(153, 27, 27, 0.3); color: #fca5a5; }
-    .alert-success { background: rgba(22, 101, 52, 0.1); border-color: rgba(22, 101, 52, 0.3); color: #86efac; }
+    .alert-error { background: rgba(153, 27, 27, 0.15); border-color: rgba(153, 27, 27, 0.3); color: #fca5a5; }
+    .alert-success { background: rgba(22, 101, 52, 0.15); border-color: rgba(22, 101, 52, 0.3); color: #86efac; }
   }
 </style>
 </head>
@@ -141,7 +151,8 @@
 
   <div class="card">
     <div class="card-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+      <!-- Stroke icon diubah ke hijau tua -->
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a4d2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
     </div>
 
     <h1>Selamat Datang</h1>
@@ -160,7 +171,7 @@
         </div>
     @endif
 
-    <!-- Menampilkan Status Sukses (misal: link reset password terkirim) -->
+    <!-- Menampilkan Status Sukses -->
     @if (session('status'))
         <div class="alert-success">{{ session('status') }}</div>
     @endif
