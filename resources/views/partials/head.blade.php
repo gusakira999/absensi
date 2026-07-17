@@ -12,4 +12,10 @@
 @fonts
 
 @vite(['resources/css/app.css', 'resources/js/app.js'])
+<script>
+    // The appearance switcher has been removed, so appearance always follows
+    // the system preference. Clear any previously saved manual choice from
+    // returning users so they aren't stuck on an old light/dark selection.
+    window.localStorage.removeItem('flux.appearance');
+</script>
 @fluxAppearance
