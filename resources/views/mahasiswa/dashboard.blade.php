@@ -4,7 +4,7 @@
         <!-- Header -->
         <div class="flex items-center justify-between">
             <div>
-                <h1 style="color: #ffffff; font-size: 24px; font-weight: 700; margin: 0;">Dashboard Mahasiswa</h1>
+                <h1 style="color: #02c002ff; font-size: 24px; font-weight: 700; margin: 0;">Dashboard Mahasiswa</h1>
                 <p style="color: #8a9b91; font-size: 14px; margin-top: 4px;">Ringkasan kehadiran & aktivitas hari ini</p>
             </div>
         </div>
