@@ -8,32 +8,40 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* WARNA DEFAULT (LIGHT MODE) */
+  /* WARNA DEFAULT (LIGHT MODE - TEMA HIJAU TUA) */
   :root{
-    --bg: #f6f7fb;
-    --card: #ffffff;
-    --border: #e7e9f0;
-    --text-hi: #171a23;
-    --text-lo: #6b7086;
-    --accent: #4f46e5;
-    --accent-soft: #ecebfd;
-    --amber: #f59e0b;
-    --amber-soft: #fef3e2;
-    --emerald: #10b981;
-    --emerald-soft: #e6f8f1;
+    --bg: #f8faf9;        /* Putih kehijauan sangat muda */
+    --card: #ffffff;      /* Putih bersih */
+    --border: #e2e8e4;    /* Hijau abu-abu muda */
+    --text-hi: #0f1c15;   /* Hijau hitam pekat */
+    --text-lo: #5c6b63;   /* Hijau abu-abu sedang */
+    
+    /* Aksen Utama: Hijau Hutan Gelap */
+    --accent: #1a4d2e;    
+    --accent-soft: #e6f0ea; 
+    
+    /* Warna pendukung disesuaikan ke tone hijau */
+    --amber: #ca8a04;     /* Emas tua */
+    --amber-soft: #fefce8;
+    --emerald: #059669;   /* Emerald gelap */
+    --emerald-soft: #ecfdf5;
   }
 
   /* WARNA KHUSUS DARK MODE (Otomatis mengikuti laptop) */
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0a0e13;       /* Background Hitam Pekat */
-      --card: #12171e;     /* Card Abu Gelap */
-      --border: #22282f;   /* Border Halus */
-      --text-hi: #f2f4f5;  /* Teks Putih Terang */
-      --text-lo: #9aa4ad;  /* Teks Abu Sedang */
-      --accent-soft: rgba(79, 70, 229, 0.15); /* Aksen transparan */
-      --amber-soft: rgba(245, 158, 11, 0.15);
-      --emerald-soft: rgba(16, 185, 129, 0.15);
+      --bg: #050a07;       /* Hitam kehijauan sangat gelap */
+      --card: #0a140f;     /* Card hijau hitam */
+      --border: #1c2e24;   /* Border hijau gelap */
+      --text-hi: #e8f0eb;  /* Putih kehijauan terang */
+      --text-lo: #8a9b91;  /* Abu kehijauan */
+      
+      /* Aksen di dark mode lebih cerah agar kontras */
+      --accent: #4ade80;   
+      --accent-soft: rgba(74, 222, 128, 0.1); 
+      
+      --amber-soft: rgba(202, 138, 4, 0.1);
+      --emerald-soft: rgba(5, 150, 105, 0.1);
     }
     
     /* Penyesuaian khusus elemen di Dark Mode */
@@ -55,7 +63,7 @@
     color:var(--text-hi);
     font-family:'Inter', sans-serif;
     min-height:100vh;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transisi halus saat ganti mode */
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   .page{
     max-width:1040px;
@@ -72,6 +80,7 @@
     font-family:'Space Grotesk', sans-serif;
     font-weight:600;
     font-size:17px;
+    color: var(--accent); /* Logo ikut warna aksen hijau */
   }
   .nav-actions{
     display:flex;
@@ -99,6 +108,7 @@
     position:relative;
     padding:48px 24px 8px;
   }
+  /* GLOW EFFECT DIUBAH JADI HIJAU TUA & HITAM */
   .hero::before{
     content:"";
     position:absolute;
@@ -106,11 +116,11 @@
     transform:translateX(-50%);
     width:560px; height:340px;
     background:
-      radial-gradient(circle at 30% 20%, rgba(79,70,229,0.14), transparent 60%),
-      radial-gradient(circle at 75% 30%, rgba(16,185,129,0.12), transparent 55%),
-      radial-gradient(circle at 55% 70%, rgba(245,158,11,0.10), transparent 55%);
+      radial-gradient(circle at 30% 20%, rgba(26, 77, 46, 0.2), transparent 60%),  /* Hijau tua */
+      radial-gradient(circle at 75% 30%, rgba(0, 0, 0, 0.15), transparent 55%),    /* Hitam */
+      radial-gradient(circle at 55% 70%, rgba(5, 150, 105, 0.15), transparent 55%); /* Emerald */
     z-index:-1;
-    filter:blur(6px);
+    filter:blur(8px);
   }
   .eyebrow{
     display:inline-block;
@@ -140,18 +150,24 @@
     gap:12px;
     justify-content:center;
   }
+  /* GRADASI TOMBOL UTAMA: HIJAU TUA KE HITAM */
   .cta{
     display:inline-flex;
     align-items:center;
     gap:6px;
-    background:linear-gradient(135deg, var(--accent), #6d28d9);
+    background: linear-gradient(135deg, #1a4d2e 0%, #000000 100%);
     color:#fff;
     font-weight:600;
     font-size:15px;
     padding:12px 22px;
     border-radius:9px;
     text-decoration:none;
-    box-shadow:0 6px 16px rgba(79,70,229,0.25);
+    box-shadow:0 6px 16px rgba(26, 77, 46, 0.3);
+  }
+  .cta:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      transition: all 0.2s ease;
   }
   .cta-secondary{
     display:inline-flex;
@@ -183,9 +199,11 @@
     display:flex;align-items:center;justify-content:center;
     margin-bottom:16px;
   }
-  .card-icon.indigo{ background:var(--accent-soft); }
+  /* Warna icon disesuaikan dengan tema hijau */
+  .card-icon.indigo{ background:var(--accent-soft); } 
   .card-icon.emerald{ background:var(--emerald-soft); }
   .card-icon.amber{ background:var(--amber-soft); }
+  
   .card h3{
     font-family:'Space Grotesk', sans-serif;
     font-size:16px;
@@ -223,7 +241,6 @@
   <nav>
     <div class="logo">Absensi Mahasiswa</div>
     <div class="nav-actions">
-      <!-- BAGIAN NAVBAR YANG SUDAH DIPERBAIKI -->
       @if (Route::has('login'))
           @auth
               <a href="{{ url('/dashboard') }}">Dashboard</a>
@@ -245,7 +262,6 @@
       bisa diakses kapan saja oleh mahasiswa dan dosen.
     </p>
     <div class="cta-row">
-      <!-- TOMBOL CTA YANG SUDAH DIPERBAIKI -->
       <a href="{{ route('login') }}" class="cta">Login Sekarang</a>
     </div>
   </div>
@@ -253,21 +269,22 @@
   <div class="cards">
     <div class="card">
       <div class="card-icon indigo">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        <!-- Icon stroke diganti jadi hijau tua -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a4d2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
       </div>
       <h3>Absensi Cepat</h3>
       <p>Cukup satu klik untuk mencatat kehadiran di setiap kelas.</p>
     </div>
     <div class="card">
       <div class="card-icon emerald">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
       </div>
       <h3>Rekap Otomatis</h3>
       <p>Lihat rekap kehadiran per mahasiswa maupun per kelas dengan mudah.</p>
     </div>
     <div class="card">
       <div class="card-icon amber">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ca8a04" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       </div>
       <h3>Jadwal Terintegrasi</h3>
       <p>Jadwal kuliah dan absensi tergabung dalam satu tampilan.</p>
