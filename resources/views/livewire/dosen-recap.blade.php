@@ -1,24 +1,27 @@
-<div class="space-y-6">
+<div class="space-y-6 p-6" style="background: linear-gradient(135deg, #0f1c15 0%, #1a2f23 50%, #050a07 100%); min-height: 100vh;">
+    
     {{-- Header + Filter --}}
-    <div class="flex items-center justify-between flex-wrap gap-4">
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
         <div>
-            <h1 class="text-2xl font-semibold">Rekap Absensi</h1>
-            <p class="text-sm text-zinc-500">Data absensi mahasiswa pada jadwal Anda.</p>
+            <h1 style="color: #ffffff; font-size: 24px; font-weight: 700; margin: 0;">Rekap Absensi</h1>
+            <p style="color: #8a9b91; font-size: 14px; margin-top: 4px;">Data absensi mahasiswa pada jadwal Anda.</p>
         </div>
 
-        <div class="flex items-center gap-3 flex-wrap">
+        <div style="display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap;">
             {{-- Filter Tanggal --}}
             <div>
-                <label class="block text-xs font-medium text-zinc-600 mb-1">Tanggal</label>
+                <label style="display: block; color: #9ca3af; font-size: 12px; font-weight: 500; margin-bottom: 6px;">Tanggal</label>
                 <input type="date" wire:model.live="date"
-                    class="px-3 py-2 border border-zinc-300 bg-white dark:bg-gray-800 dark:border-zinc-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                    style="padding: 8px 12px; border: 1px solid #374151; background: #1f2937; color: #fff; border-radius: 8px; font-size: 14px; outline: none;"
+                    class="focus:ring-2 focus:ring-emerald-500 focus:border-transparent" />
             </div>
 
             {{-- Filter Status --}}
             <div>
-                <label class="block text-xs font-medium text-zinc-600 mb-1">Filter Status</label>
+                <label style="display: block; color: #9ca3af; font-size: 12px; font-weight: 500; margin-bottom: 6px;">Filter Status</label>
                 <select wire:model.live="statusFilter"
-                    class="px-3 py-2 border border-zinc-300 bg-white dark:bg-gray-800 dark:border-zinc-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    style="padding: 8px 12px; border: 1px solid #374151; background: #1f2937; color: #fff; border-radius: 8px; font-size: 14px; outline: none;"
+                    class="focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
                     <option value="">Semua</option>
                     <option value="hadir">Hadir</option>
                     <option value="izin">Izin</option>
@@ -37,72 +40,75 @@
         $sakitCount = $attendances->getCollection()->where('status','sakit')->count();
         $alphaCount = $attendances->getCollection()->where('status','alpha')->count();
     @endphp
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border-l-4 border-green-500">
-            <p class="text-xs text-zinc-500 uppercase tracking-wide">Hadir</p>
-            <p class="text-2xl font-bold text-green-600">{{ $hadirCount }}</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+        <div style="background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); padding: 20px; border-radius: 12px; border: 1px solid #374151; border-left: 4px solid #34d399;">
+            <p style="color: #9ca3af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 8px 0;">Hadir</p>
+            <p style="color: #34d399; font-size: 28px; font-weight: 700; margin: 0;">{{ $hadirCount }}</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border-l-4 border-yellow-500">
-            <p class="text-xs text-zinc-500 uppercase tracking-wide">Izin</p>
-            <p class="text-2xl font-bold text-yellow-600">{{ $izinCount }}</p>
+        <div style="background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); padding: 20px; border-radius: 12px; border: 1px solid #374151; border-left: 4px solid #fbbf24;">
+            <p style="color: #9ca3af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 8px 0;">Izin</p>
+            <p style="color: #fbbf24; font-size: 28px; font-weight: 700; margin: 0;">{{ $izinCount }}</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border-l-4 border-blue-500">
-            <p class="text-xs text-zinc-500 uppercase tracking-wide">Sakit</p>
-            <p class="text-2xl font-bold text-blue-600">{{ $sakitCount }}</p>
+        <div style="background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); padding: 20px; border-radius: 12px; border: 1px solid #374151; border-left: 4px solid #60a5fa;">
+            <p style="color: #9ca3af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 8px 0;">Sakit</p>
+            <p style="color: #60a5fa; font-size: 28px; font-weight: 700; margin: 0;">{{ $sakitCount }}</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border-l-4 border-red-500">
-            <p class="text-xs text-zinc-500 uppercase tracking-wide">Alpha</p>
-            <p class="text-2xl font-bold text-red-600">{{ $alphaCount }}</p>
+        <div style="background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); padding: 20px; border-radius: 12px; border: 1px solid #374151; border-left: 4px solid #f87171;">
+            <p style="color: #9ca3af; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 8px 0;">Alpha</p>
+            <p style="color: #f87171; font-size: 28px; font-weight: 700; margin: 0;">{{ $alphaCount }}</p>
         </div>
     </div>
 
     {{-- Tabel --}}
-    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
-        <table class="w-full text-sm text-zinc-900 dark:text-zinc-100">
-            <thead class="bg-zinc-100 dark:bg-zinc-700 border-b">
+    <div style="background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(8px); border-radius: 12px; border: 1px solid #374151; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #1f2937; border-bottom: 1px solid #374151;">
                 <tr>
-                    <th class="px-6 py-3 text-left font-semibold">Mata Kuliah</th>
-                    <th class="px-6 py-3 text-left font-semibold">Mahasiswa</th>
-                    <th class="px-6 py-3 text-left font-semibold">Status</th>
-                    <th class="px-6 py-3 text-left font-semibold">Check-in</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 13px; text-transform: uppercase;">Mata Kuliah</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 13px; text-transform: uppercase;">Mahasiswa</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 13px; text-transform: uppercase;">Status</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 13px; text-transform: uppercase;">Check-in</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-zinc-100 dark:divide-zinc-700">
+            <tbody>
                 @forelse($attendances as $a)
-                    <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700">
-                        <td class="px-6 py-4">
-                            <div class="font-medium">{{ $a->course?->course_name ?? '-' }}</div>
-                            <div class="text-xs text-zinc-500">{{ $a->course?->course_code }}</div>
+                    @php
+                        $badgeColors = [
+                            'hadir' => ['bg' => '#065f46', 'text' => '#34d399'],
+                            'izin'  => ['bg' => '#92400e', 'text' => '#fbbf24'],
+                            'sakit' => ['bg' => '#1e40af', 'text' => '#60a5fa'],
+                            'alpha' => ['bg' => '#991b1b', 'text' => '#f87171'],
+                        ];
+                        $colors = $badgeColors[$a->status] ?? ['bg' => '#374151', 'text' => '#9ca3af'];
+                    @endphp
+                    <tr style="border-bottom: 1px solid #1f2937; transition: background 0.2s;" 
+                        onmouseover="this.style.background='rgba(55, 65, 81, 0.3)'" 
+                        onmouseout="this.style.background='transparent'">
+                        <td style="padding: 16px;">
+                            <div style="color: #ffffff; font-weight: 500; font-size: 14px;">{{ $a->course?->course_name ?? '-' }}</div>
+                            <div style="color: #6b7280; font-size: 12px;">{{ $a->course?->course_code }}</div>
                         </td>
-                        <td class="px-6 py-4">
-                            <div class="font-medium">{{ $a->student?->name ?? '-' }}</div>
-                            <div class="text-xs text-zinc-500">{{ $a->student?->nim ?? '-' }}</div>
+                        <td style="padding: 16px;">
+                            <div style="color: #ffffff; font-weight: 500; font-size: 14px;">{{ $a->student?->name ?? '-' }}</div>
+                            <div style="color: #6b7280; font-size: 12px;">{{ $a->student?->nim ?? '-' }}</div>
                         </td>
-                        <td class="px-6 py-4">
-                            @php
-                                $badgeClass = match($a->status) {
-                                    'hadir' => 'bg-green-100 text-green-700',
-                                    'izin'  => 'bg-yellow-100 text-yellow-700',
-                                    'sakit' => 'bg-blue-100 text-blue-700',
-                                    'alpha' => 'bg-red-100 text-red-700',
-                                    default => 'bg-zinc-100 text-zinc-700',
-                                };
-                            @endphp
-                            <span class="px-3 py-1 rounded-full text-xs font-medium {{ $badgeClass }}">
+                        <td style="padding: 16px;">
+                            <span style="padding: 4px 12px; background: {{ $colors['bg'] }}; color: {{ $colors['text'] }}; border-radius: 12px; font-size: 12px; font-weight: 600; display: inline-block;">
                                 {{ ucfirst($a->status) }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-zinc-600 dark:text-zinc-300">
+                        <td style="padding: 16px; color: #d1d5db; font-size: 14px;">
                             {{ optional($a->check_in_time)->format('H:i') ?? '-' }}
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-6 py-10 text-center text-zinc-500 dark:text-zinc-400">
-                            <div class="text-4xl mb-2">📭</div>
-                            <div>Belum ada data absensi untuk tanggal <strong>{{ $date }}</strong>.</div>
+                        <td colspan="4" style="padding: 40px; text-align: center; color: #6b7280;">
+                            <div style="font-size: 40px; margin-bottom: 8px;">📭</div>
+                            <div style="color: #9ca3af; font-size: 14px;">Belum ada data absensi untuk tanggal <strong style="color: #d1d5db;">{{ $date }}</strong>.</div>
                             @if($schedules->isEmpty())
-                                <div class="text-xs mt-1 text-zinc-400">Anda tidak memiliki jadwal pada hari ini.</div>
+                                <div style="font-size: 12px; margin-top: 8px; color: #6b7280;">Anda tidak memiliki jadwal pada hari ini.</div>
                             @endif
                         </td>
                     </tr>
@@ -111,7 +117,9 @@
         </table>
     </div>
 
-    <div>
-        {{ $attendances->links() }}
+    {{-- Pagination --}}
+    <div style="margin-top: 20px;">
+        {{ $attendances->links(data: ['scrollTo' => false]) }}
     </div>
+
 </div>
