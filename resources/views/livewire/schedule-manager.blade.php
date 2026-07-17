@@ -1,114 +1,120 @@
-<div class="space-y-6">
+<div class="space-y-6 p-6" style="background: linear-gradient(135deg, #0f1c15 0%, #1a2f23 50%, #050a07 100%); min-height: 100vh;">
+    <!-- Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-semibold">Manajemen Jadwal</h1>
-            <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Kelola jadwal kuliah (Admin)</p>
+            <h1 style="color: #ffffff; font-size: 24px; font-weight: 700; margin: 0;">Manajemen Jadwal</h1>
+            <p style="color: #8a9b91; font-size: 14px; margin-top: 4px;">Kelola jadwal kuliah (Admin)</p>
         </div>
 
-        <button
-            wire:click="openCreateForm"
-            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition"
-        >
+        <button wire:click="openCreateForm" 
+            style="padding: 8px 16px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">
             + Tambah Jadwal
         </button>
     </div>
 
+    <!-- Search -->
     <div>
-        <input
-            type="text"
-            wire:model.live.debounce.300ms="searchTerm"
-            placeholder="Cari course atau dosen..."
-            class="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+        <input type="text" wire:model.live.debounce.300ms="searchTerm" placeholder="Cari course atau dosen..." 
+            style="width: 100%; padding: 10px 14px; border: 1px solid #374151; background: #1f2937; color: #fff; border-radius: 8px;">
     </div>
 
-    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
-        <table class="w-full text-sm text-zinc-900 dark:text-zinc-100">
-            <thead class="bg-zinc-100 dark:bg-zinc-800 border-b">
+    <!-- Tabel -->
+    <div style="background: #111827; border-radius: 8px; overflow: hidden;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #1f2937; border-bottom: 1px solid #374151;">
                 <tr>
-                    <th class="px-6 py-3 text-left font-semibold">Course</th>
-                    <th class="px-6 py-3 text-left font-semibold">Dosen</th>
-                    <th class="px-6 py-3 text-left font-semibold">Hari</th>
-                    <th class="px-6 py-3 text-left font-semibold">Jam</th>
-                    <th class="px-6 py-3 text-left font-semibold">Ruang</th>
-                    <th class="px-6 py-3 text-center font-semibold">Aksi</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 14px;">Course</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 14px;">Dosen</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 14px;">Hari</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 14px;">Jam</th>
+                    <th style="padding: 14px 16px; text-align: left; font-weight: 600; color: #10b981; font-size: 14px;">Ruang</th>
+                    <th style="padding: 14px 16px; text-align: center; font-weight: 600; color: #10b981; font-size: 14px;">Aksi</th>
                 </tr>
             </thead>
-            <tbody class="divide-y">
+            <tbody>
                 @forelse($schedules as $s)
-                    <tr class="hover:bg-zinc-50 dark:hover:bg-zinc-700">
-                        <td class="px-6 py-4">
-                            <div class="font-medium">{{ $s->course?->course_name }}</div>
-                            <div class="text-xs text-zinc-500">{{ $s->course?->course_code }}</div>
+                    <tr style="border-bottom: 1px solid #1f2937;">
+                        <td style="padding: 16px; color: #e5e7eb; font-size: 14px;">
+                            <div style="font-weight: 500; color: #ffffff;">{{ $s->course?->course_name }}</div>
+                            <div style="color: #6b7280; font-size: 12px; margin-top: 2px;">{{ $s->course?->course_code }}</div>
                         </td>
-                        <td class="px-6 py-4">
-                            <div class="font-medium">{{ $s->lecturerUser?->name }}</div>
-                            <div class="text-xs text-zinc-500">{{ $s->lecturerUser?->email }}</div>
+                        <td style="padding: 16px; color: #e5e7eb; font-size: 14px;">
+                            {{ $s->lecturerUser?->name }}
                         </td>
-                <td class="px-6 py-4">{{ $s->day === 'mon' ? 'Senin' : ($s->day === 'tue' ? 'Selasa' : ($s->day === 'wed' ? 'Rabu' : ($s->day === 'thu' ? 'Kamis' : ($s->day === 'fri' ? 'Jumat' : ($s->day === 'sat' ? 'Sabtu' : ($s->day === 'sun' ? 'Minggu' : $s->day)))))) }}</td>
-                        <td class="px-6 py-4">{{ $s->start_time }} - {{ $s->end_time }}</td>
-                        <td class="px-6 py-4">{{ $s->room }}</td>
-                        <td class="px-6 py-4 text-center space-x-2">
-                            <button
-                                wire:click="openEditForm({{ $s->id }})"
-                                class="px-3 py-1 text-sm bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 rounded hover:bg-yellow-200 dark:hover:bg-yellow-800 transition"
-                            >Edit</button>
-                            <button
-                                wire:click="delete({{ $s->id }})"
-                                wire:confirm="Yakin hapus jadwal ini?"
-                                class="px-3 py-1 text-sm bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 rounded hover:bg-red-200 dark:hover:bg-red-800 transition"
-                            >Hapus</button>
+                        <td style="padding: 16px; color: #e5e7eb; font-size: 14px;">
+                            @php
+                                $days = ['mon' => 'Senin', 'tue' => 'Selasa', 'wed' => 'Rabu', 'thu' => 'Kamis', 'fri' => 'Jumat', 'sat' => 'Sabtu', 'sun' => 'Minggu'];
+                                echo $days[$s->day] ?? $s->day;
+                            @endphp
+                        </td>
+                        <td style="padding: 16px; color: #9ca3af; font-size: 14px;">
+                            {{ $s->start_time }} - {{ $s->end_time }}
+                        </td>
+                        <td style="padding: 16px; color: #9ca3af; font-size: 14px;">
+                            {{ $s->room }}
+                        </td>
+                        <td style="padding: 16px; text-align: center;">
+                            <button wire:click="openEditForm({{ $s->id }})" 
+                                style="padding: 6px 12px; background: #10b981; color: white; border: none; border-radius: 5px; font-size: 12px; cursor: pointer; margin-right: 6px;">
+                                Edit
+                            </button>
+                            <button wire:click="delete({{ $s->id }})" wire:confirm="Yakin hapus jadwal ini?"
+                                style="padding: 6px 12px; background: #ef4444; color: white; border: none; border-radius: 5px; font-size: 12px; cursor: pointer;">
+                                Hapus
+                            </button>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-8 text-center text-zinc-500 dark:text-zinc-400">Belum ada jadwal.</td>
+                        <td colspan="6" style="padding: 40px; text-align: center; color: #6b7280;">Belum ada jadwal.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
     </div>
 
-    <div>
-        {{ $schedules->links() }}
+    <!-- Pagination -->
+    <div style="margin-top: 20px;">
+        {{ $schedules->links(data: ['scrollTo' => false]) }}
     </div>
 
+    <!-- Modal Form -->
     @if($showForm)
-        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4">
-                <div class="px-6 py-4 border-b flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-                        {{ $editingId ? '✏️ Edit Jadwal' : '➕ Tambah Jadwal' }}
+        <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 50;">
+            <div style="background: #1f2937; border: 1px solid #374151; border-radius: 8px; width: 100%; max-width: 480px; margin: 16px;">
+                <div style="padding: 16px 20px; border-bottom: 1px solid #374151; display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="color: #ffffff; font-size: 18px; font-weight: 600; margin: 0;">
+                        {{ $editingId ? 'Edit Jadwal' : 'Tambah Jadwal' }}
                     </h2>
-                    <button wire:click="closeForm" class="text-gray-500 dark:text-zinc-300 hover:text-gray-700 dark:hover:text-gray-400 text-2xl">✕</button>
+                    <button wire:click="closeForm" style="background: none; border: none; color: #9ca3af; font-size: 20px; cursor: pointer;">&times;</button>
                 </div>
 
-                <form wire:submit.prevent="save" class="p-6 space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Course</label>
-                        <select wire:model.defer="course_id" class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <form wire:submit="save" style="padding: 20px;">
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; color: #d1d5db; margin-bottom: 6px; font-size: 13px; font-weight: 500;">Course</label>
+                        <select wire:model="course_id" style="width: 100%; padding: 8px 12px; border: 1px solid #374151; background: #111827; color: #fff; border-radius: 6px;">
                             <option value="">-- Pilih Course --</option>
                             @foreach($courses as $c)
                                 <option value="{{ $c->id }}">{{ $c->course_code }} - {{ $c->course_name }}</option>
                             @endforeach
                         </select>
-                        @error('course_id') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('course_id') <p style="color: #fca5a5; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Dosen</label>
-                        <select wire:model.defer="user_id" class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; color: #d1d5db; margin-bottom: 6px; font-size: 13px; font-weight: 500;">Dosen</label>
+                        <select wire:model="user_id" style="width: 100%; padding: 8px 12px; border: 1px solid #374151; background: #111827; color: #fff; border-radius: 6px;">
                             <option value="">-- Pilih Dosen --</option>
                             @foreach($dosens as $d)
                                 <option value="{{ $d->id }}">{{ $d->name }}</option>
                             @endforeach
                         </select>
-                        @error('user_id') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('user_id') <p style="color: #fca5a5; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Hari</label>
-                        <select wire:model.defer="dayInput" class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; color: #d1d5db; margin-bottom: 6px; font-size: 13px; font-weight: 500;">Hari</label>
+                        <select wire:model="dayInput" style="width: 100%; padding: 8px 12px; border: 1px solid #374151; background: #111827; color: #fff; border-radius: 6px;">
                             <option value="">-- Pilih Hari --</option>
                             <option value="mon">Senin</option>
                             <option value="tue">Selasa</option>
@@ -117,37 +123,41 @@
                             <option value="fri">Jumat</option>
                             <option value="sat">Sabtu</option>
                             <option value="sun">Minggu</option>
-
                         </select>
-                        @error('dayInput') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('dayInput') <p style="color: #fca5a5; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
                         <div>
-                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Mulai</label>
-                            <input type="time" wire:model.defer="start_time" class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                            @error('start_time') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                            <label style="display: block; color: #d1d5db; margin-bottom: 6px; font-size: 13px; font-weight: 500;">Mulai</label>
+                            <input type="time" wire:model="start_time" style="width: 100%; padding: 8px 12px; border: 1px solid #374151; background: #111827; color: #fff; border-radius: 6px;" />
+                            @error('start_time') <p style="color: #fca5a5; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Selesai</label>
-                            <input type="time" wire:model.defer="end_time" class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                            @error('end_time') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                            <label style="display: block; color: #d1d5db; margin-bottom: 6px; font-size: 13px; font-weight: 500;">Selesai</label>
+                            <input type="time" wire:model="end_time" style="width: 100%; padding: 8px 12px; border: 1px solid #374151; background: #111827; color: #fff; border-radius: 6px;" />
+                            @error('end_time') <p style="color: #fca5a5; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-200 mb-1">Ruang</label>
-                        <input type="text" wire:model.defer="room" placeholder="Contoh: Lab 1" class="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        @error('room') <p class="text-red-600 text-xs mt-1">{{ $message }}</p> @enderror
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; color: #d1d5db; margin-bottom: 6px; font-size: 13px; font-weight: 500;">Ruang</label>
+                        <input type="text" wire:model="room" placeholder="Contoh: Lab 1" style="width: 100%; padding: 8px 12px; border: 1px solid #374151; background: #111827; color: #fff; border-radius: 6px;" />
+                        @error('room') <p style="color: #fca5a5; font-size: 11px; margin-top: 4px;">{{ $message }}</p> @enderror
                     </div>
 
-                    <div class="flex gap-3 pt-4">
-                        <button type="button" wire:click="closeForm" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-zinc-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition font-medium">Batal</button>
-                        <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">Simpan</button>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="button" wire:click="closeForm" 
+                            style="flex: 1; padding: 10px; background: #374151; color: #fff; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; font-size: 14px;">
+                            Batal
+                        </button>
+                        <button type="submit" 
+                            style="flex: 1; padding: 10px; background: #10b981; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;">
+                            Simpan
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
     @endif
 </div>
-
